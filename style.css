@@ -1,0 +1,199 @@
+/* Basic Reset & Body Styling */
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #ffe0b2;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    overflow: hidden;
+}
+
+h1 {
+    color: #8b4513;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Score Display */
+.score-container {
+    font-size: 1.8em;
+    color: #4CAF50;
+    font-weight: bold;
+    margin-bottom: 25px;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Game Container (The "Box") */
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 15px;
+    padding: 25px;
+    background-color: #654321;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border: 8px solid #4a2c0f;
+    width: 90%;
+    max-width: 600px;
+    justify-content: center;
+    align-content: center;
+}
+
+/* Individual Hole */
+.hole {
+    width: 100px;
+    height: 100px;
+    background-color: #8B4513;
+    border-radius: 50%;
+    border: 5px solid #5a3b1a;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 5px 10px rgba(0,0,0,0.3);
+    justify-self: center;
+    align-self: center;
+}
+
+/* Object Display Styling */
+.object-display {
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8; /* Default background for objects */
+    border-radius: 50%;
+    position: absolute;
+    bottom: -100%; /* Initially hidden */
+    left: 0;
+    transition: bottom 0.08s ease-out; /* Fast pop-up animation */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5em; /* Size of the emoji */
+}
+
+/* When the hole has the 'up' class, the object pops up */
+.hole.up .object-display {
+    bottom: 0; /* Object moves up to be visible */
+    background-color: #ffffff; /* Brighter when up */
+}
+
+/* Visual feedback for hitting a flying object */
+.object-display.hit-flying {
+    background-color: #4CAF50; /* Green for success */
+    transform: scale(0.9);
+    transition: all 0.05s ease-in-out;
+}
+
+/* Visual feedback for hitting a non-flying object (fail) */
+.object-display.hit-nonflying {
+    background-color: #dc3545; /* Red for failure */
+    transform: scale(0.9);
+    transition: all 0.05s ease-in-out;
+}
+
+/* Start Button */
+#startButton {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 30px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#startButton:hover:not(:disabled) {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+#startButton:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#startButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Confetti Styles */
+#confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    opacity: 0;
+    transform-origin: center;
+    animation: confetti-fall 3s forwards ease-out;
+    border-radius: 50%;
+}
+
+@keyframes confetti-fall {
+    0% {
+        opacity: 0;
+        transform: translate(0, -10vh) rotate(0deg) scale(0.5);
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--end-x), 110vh) rotate(720deg) scale(1);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .game-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 15px;
+        max-width: 300px;
+    }
+    .hole {
+        width: 80px;
+        height: 80px;
+    }
+    .object-display {
+        font-size: 3em;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    .score-container {
+        font-size: 1.4em;
+    }
+    #startButton {
+        font-size: 1.2em;
+        padding: 10px 20px;
+    }
+}
